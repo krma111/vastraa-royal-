@@ -1,0 +1,25 @@
+{
+  "base": "Vastraa Royale",
+  "tables": ["Leads", "Daily Metrics"],
+  "automations": [
+    {
+      "name": "New lead alert",
+      "trigger": "When record created in Leads",
+      "actions": [
+        "Send email to founder: 'New enquiry: {Name} ({City}) — {Occasion} / {Budget}'",
+        "Conditional: if Consent is checked, queue WhatsApp thank-you within 24h"
+      ]
+    },
+    {
+      "name": "Daily 9PM report",
+      "trigger": "At 9:00 PM IST daily",
+      "actions": [
+        "Find records in Leads where CreatedAt is today",
+        "Create record in Daily Metrics: Date=today, LeadCount=count, TopCity=most common, TopOccasion=most common",
+        "Send email digest to founder"
+      ]
+    }
+  ],
+  "views": ["All", "Hot", "Today", "By City", "By Occasion"],
+  "notes": "Create these manually in Airtable Automations UI — this JSON is the spec, not an import file. Table Leads fields: Name(text), WhatsApp(phone), City(text), Occasion(select), Budget(select), Consent(checkbox), Source(text), CreatedAt(date)."
+}
